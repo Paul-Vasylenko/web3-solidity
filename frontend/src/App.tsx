@@ -1,10 +1,11 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import Web3Counter from "./components/Web3Counter";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
@@ -16,8 +17,14 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>Web3 DApp - Vite + React + Solidity</h1>
+
+      {/* Web3 Smart Contract Counter */}
+      <Web3Counter />
+
+      {/* Local React Counter for comparison */}
       <div className="card">
+        <h2>Local React Counter (for comparison)</h2>
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
@@ -26,10 +33,13 @@ function App() {
         </p>
       </div>
       <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+        The top counter interacts with a Solidity smart contract on your local
+        blockchain!
+        <br />
+        The bottom counter is just local React state.
       </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

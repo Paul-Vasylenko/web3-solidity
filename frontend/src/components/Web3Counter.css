@@ -1,0 +1,113 @@
+.web3-counter {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border: 2px solid #646cff;
+  border-radius: 12px;
+  background-color: #1a1a1a;
+  text-align: center;
+}
+
+.web3-counter h2 {
+  color: #646cff;
+  margin-bottom: 1.5rem;
+}
+
+.counter-display {
+  background-color: #2a2a2a;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.counter-display h3 {
+  color: #ffffff;
+  font-size: 2rem;
+  margin: 0;
+}
+
+.counter-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.counter-btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 120px;
+}
+
+.counter-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.decrement {
+  background-color: #f87171;
+  color: white;
+  border-color: #ef4444;
+}
+
+.decrement:hover:not(:disabled) {
+  background-color: #ef4444;
+}
+
+.increment {
+  background-color: #34d399;
+  color: white;
+  border-color: #10b981;
+}
+
+.increment:hover:not(:disabled) {
+  background-color: #10b981;
+}
+
+.increment-by {
+  background-color: #60a5fa;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.increment-by:hover:not(:disabled) {
+  background-color: #3b82f6;
+}
+
+.contract-info {
+  background-color: #2a2a2a;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.contract-info p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  color: #cccccc;
+}
+
+.transaction-info {
+  background-color: #2a2a2a;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+}
+
+.transaction-info h4 {
+  margin-top: 0;
+  color: #646cff;
+}
+
+.transaction-info p {
+  font-family: monospace;
+  word-break: break-all;
+  margin: 0.25rem 0;
+  color: #cccccc;
+}
