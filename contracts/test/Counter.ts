@@ -31,6 +31,6 @@ describe("Counter", function () {
       total += event.args.by;
     }
 
-    expect(await counter.x()).to.equal(total);
+    expect(await counter.getValue()).to.equal(total);
   });
 });
