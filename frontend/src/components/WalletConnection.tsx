@@ -1,9 +1,8 @@
 import { useAccount, useConnect, useDisconnect } from "wagmi";
-import { injected } from "wagmi/connectors";
 
 function WalletConnection() {
   const { address, isConnected } = useAccount();
-  const { connect } = useConnect();
+  const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
 
   if (isConnected) {
@@ -18,9 +17,11 @@ function WalletConnection() {
   return (
     <div className="wallet-connect">
       <p>Please connect your wallet to interact with the smart contract</p>
-      <button onClick={() => connect({ connector: injected() })}>
-        Connect Wallet
-      </button>
+      {connectors.map((connector) => (
+        <button key={connector.id} onClick={() => connect({ connector })}>
+          {connector.name}
+        </button>
+      ))}
     </div>
   );
 }

@@ -2,11 +2,16 @@ import {
   useReadContract,
   useWriteContract,
   useWaitForTransactionReceipt,
+  useAccount,
 } from "wagmi";
 import "./Web3Counter.css";
 import { counterAbi } from "../generated/abi";
+import { COUNTER_CONTRACT_ADDRESS } from "../wagmi";
+import WalletConnection from "./WalletConnection";
 
 function Web3Counter() {
+  const { isConnected } = useAccount();
+
   // Read the current count from the contract
   const {
     data: count,
@@ -14,9 +19,9 @@ function Web3Counter() {
     isPending,
     refetch,
   } = useReadContract({
-    address: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+    address: COUNTER_CONTRACT_ADDRESS,
     abi: counterAbi,
-    functionName: "x",
+    functionName: "getValue",
   });
 
   // Write functions for incrementing
@@ -46,30 +51,41 @@ function Web3Counter() {
     refetch();
   }
 
-//   const handleIncrement = () => {
-//     increment({
-//       address: COUNTER_CONTRACT_ADDRESS,
-//       abi: COUNTER_ABI,
-//       functionName: "inc",
-//     });
-//   };
+  const handleIncrement = () => {
+    if (!isConnected) {
+      console.log("Wallet not connected!");
+      alert("Please connect your wallet first!");
+      return;
+    }
 
-//   const handleIncrementBy = () => {
-//     incrementBy({
-//       address: COUNTER_CONTRACT_ADDRESS,
-//       abi: COUNTER_ABI,
-//       functionName: "incBy",
-//       args: [BigInt(10)], // Increment by 10
-//     });
-//   };
+    try {
+      increment({
+        address: COUNTER_CONTRACT_ADDRESS,
+        abi: counterAbi,
+        functionName: "inc",
+      });
+      console.log("Increment transaction initiated");
+    } catch (error) {
+      console.error("Error calling increment:", error);
+    }
+  };
 
-//   const handleDecrement = () => {
-//     decrement({
-//       address: COUNTER_CONTRACT_ADDRESS,
-//       abi: COUNTER_ABI,
-//       functionName: "dec",
-//     });
-//   };
+  const handleIncrementBy = () => {
+    incrementBy({
+      address: COUNTER_CONTRACT_ADDRESS,
+      abi: counterAbi,
+      functionName: "incBy",
+      args: [BigInt(10)], // Increment by 10
+    });
+  };
+
+  const handleDecrement = () => {
+    decrement({
+      address: COUNTER_CONTRACT_ADDRESS,
+      abi: counterAbi,
+      functionName: "dec",
+    });
+  };
 
   if (isPending) return <div>Loading contract data...</div>;
   if (isError) return <div>Error connecting to contract</div>;
@@ -77,13 +93,17 @@ function Web3Counter() {
   return (
     <div className="web3-counter">
       <h2>Web3 Smart Contract Counter</h2>
+
+      {/* Wallet Connection */}
+      <WalletConnection />
+
       <div className="counter-display">
         <h3>Current Count: {count?.toString() || "0"}</h3>
       </div>
 
       <div className="counter-actions">
         <button
-        //   onClick={handleDecrement}
+          onClick={handleDecrement}
           disabled={isDecPending || decResult.isLoading}
           className="counter-btn decrement"
         >
@@ -91,7 +111,7 @@ function Web3Counter() {
         </button>
 
         <button
-        //   onClick={handleIncrement}
+          onClick={handleIncrement}
           disabled={isIncPending || incResult.isLoading}
           className="counter-btn increment"
         >
@@ -99,7 +119,7 @@ function Web3Counter() {
         </button>
 
         <button
-        //   onClick={handleIncrementBy}
+          onClick={handleIncrementBy}
           disabled={isIncByPending || incByResult.isLoading}
           className="counter-btn increment-by"
         >
@@ -111,7 +131,7 @@ function Web3Counter() {
 
       <div className="contract-info">
         <p>
-          <strong>Contract Address:</strong> {'0x5FbDB2315678afecb367f032d93F642f64180aa3'}
+          <strong>Contract Address:</strong> {COUNTER_CONTRACT_ADDRESS}
         </p>
         <p>
           <strong>Network:</strong> Localhost
